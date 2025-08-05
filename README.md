@@ -5,12 +5,13 @@ Paste in an error message or stack trace, get a clear explanation and fix sugges
 ## 🔧 Tech Stack
 - **Backend**: FastAPI (Python)
 - **LLM**: OpenAI GPT-4
-- **Frontend**: React
+- **Frontend**: Svelte
 
 ## 🚀 Features
 - `/api/explain`: Accepts an error message or stack trace and returns:
   - A plain-English explanation
   - Suggested code fix or debugging steps
+- `/ping` : Health check
 
 ## 📂 Project Structure
 ```
@@ -57,7 +58,7 @@ POST to `http://localhost:8000/api/explain` with JSON:
   "error_log": "TypeError: 'int' object is not iterable"
 }
 
-# Response:
+**Response**:
 {
   "explanation": "You're trying to iterate over an integer, which isn't iterable.",
   "suggested_fix": "Check where you're using a 'for' loop or comprehension and make sure the value is a list or iterable."
