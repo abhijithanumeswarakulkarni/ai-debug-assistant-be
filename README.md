@@ -4,7 +4,7 @@ Paste in an error message or stack trace, get a clear explanation and fix sugges
 
 ## 🔧 Tech Stack
 - **Backend**: FastAPI (Python)
-- **LLM**: OpenAI GPT-4
+- **LLM**: Groq llama3-70b-8192
 - **Frontend**: Svelte
 
 ## 🚀 Features
