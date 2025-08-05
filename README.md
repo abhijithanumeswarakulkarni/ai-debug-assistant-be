@@ -57,10 +57,12 @@ POST to `http://localhost:8000/api/explain` with JSON:
 {
   "error_log": "TypeError: 'int' object is not iterable"
 }
-
+```
 **Response**:
+```
 {
   "explanation": "You're trying to iterate over an integer, which isn't iterable.",
   "suggested_fix": "Check where you're using a 'for' loop or comprehension and make sure the value is a list or iterable."
+  "related_image_url": "..."
 }
 ```
