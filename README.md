@@ -4,10 +4,15 @@ FastAPI-powered backend for AI Debug Assistant — paste in an error message or 
 
 🔗 [Frontend Repo](https://github.com/abhijithanumeswarakulkarni/ai-debug-assistant-ui)
 
+---
+
 ## 📦 Tech Stack
 
 - **Backend**: FastAPI (Python)
 - **LLM**: Groq (llama3-70b-8192)
+- **Deployment**: Render
+
+---
 
 ## ✨ Features
 
@@ -16,6 +21,8 @@ FastAPI-powered backend for AI Debug Assistant — paste in an error message or 
   - Suggested fix or debug steps
   - External reference links
 - `/ping`: Health check endpoint
+
+---
 
 ## 📂 Project Structure
 ```
@@ -30,11 +37,16 @@ ai_debug_assistant/
 requirements.txt          # Dependencies
 README.md
 ```
+---
 
 ## 🚀 Getting Started
 
+1. **Clone the repo**
 ```bash
 git clone https://github.com/abhijithanumeswarakulkarni/ai-debug-assistant-be.git
+```
+2. **Install Dependencies**
+```
 cd ai-debug-assistant-be
 pip install -r requirements.txt
 ```
@@ -51,10 +63,11 @@ GROQ_MODEL=<model-you-want-to-use> ex: llama3-70b-8192
 uvicorn ai_debug_assistant.main:app --reload
 ```
 
+---
+
 ## 🧪 Example
 
 # Request:
-
 ```
 http POST /api/explain
 {
