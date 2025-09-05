@@ -1,16 +1,20 @@
-import os, requests
+# groq_client.py
+import os, json, requests
 
 BASE = "https://api.groq.com/openai/v1"
-MODEL = os.getenv("GROQ_MODEL", "llama-3.1-70b-versatile")
+MODEL = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")  # current model
 
-def get_groq_response(prompt: str) -> str:
+def get_groq_response(prompt: str) -> dict:
     api_key = os.getenv("GROQ_API_KEY")
-    assert api_key, "GROQ_API_KEY missing"
+    if not api_key:
+        raise RuntimeError("GROQ_API_KEY missing")
 
     payload = {
         "model": MODEL,
         "messages": [{"role": "user", "content": prompt or "Hello"}],
-        "max_tokens": 256
+        "max_tokens": 1000,                         # avoid truncation
+        "temperature": 0,                           # deterministic JSON
+        "response_format": {"type": "json_object"}  # force JSON output
     }
 
     r = requests.post(
@@ -25,11 +29,25 @@ def get_groq_response(prompt: str) -> str:
     )
 
     if not r.ok:
-        # show Groq's actual complaint
+        # Bubble up the provider's error body
         try:
-            print("Groq error body:", r.json())
+            err = r.json()
         except Exception:
-            print("Groq error text:", r.text)
-        r.raise_for_status()
+            err = {"text": r.text}
+        raise RuntimeError(f"Groq {r.status_code}: {err}")
 
-    return r.json()["choices"][0]["message"]["content"]
+    text = r.json()["choices"][0]["message"]["content"]
+
+    # Parse model text to a Python dict so API returns an object, not a string
+    try:
+        obj = json.loads(text)
+        if not isinstance(obj, dict):
+            raise ValueError("Response is not a JSON object")
+        return obj
+    except Exception:
+        # Fallback to keep UI functional
+        return {
+            "explanation": text.strip(),
+            "suggested_fix": "No structured fix provided.",
+            "suggested_external_links": []
+        }

@@ -26,7 +26,7 @@ async def explain(payload: ErrorRequest):
         prompt = build_prompt(payload.error_log)
         result = get_groq_response(prompt)
         print("Groq Request Successful")
-        return {"response": result}
+        return result
     except Exception as e:
         print("Groq Request Failed:", e)
         raise HTTPException(status_code=500, detail=str(e))
